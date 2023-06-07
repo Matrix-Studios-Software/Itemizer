@@ -5,7 +5,7 @@ import java.lang.Exception
 
 object MaterialCompatibility {
 
-    var stained_glass_pane: Material = try {
+    var STAINED_GLASS_PANE: Material = try {
         Material.getMaterial("LEGACY_STAINED_GLASS_PANE")!!
     } catch (e: Exception) {
         Material.getMaterial("STAINED_GLASS_PANE")!!

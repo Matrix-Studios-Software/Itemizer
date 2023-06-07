@@ -3,10 +3,7 @@ package ltd.matrixstudios.itemizer.menu
 import ltd.matrixstudios.itemizer.menu.buttons.PlaceholderButton
 import ltd.matrixstudios.itemizer.util.MaterialCompatibility
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitRunnable
-import java.lang.Math.ceil
 import java.util.concurrent.CompletableFuture
 
 abstract class Menu(
@@ -57,7 +54,7 @@ abstract class Menu(
         MenuController.addToMenuMap(player, this)
 
         if (placeholder) {
-            val placeholder = PlaceholderButton(MaterialCompatibility.stained_glass_pane, mutableListOf(), "", 7)
+            val placeholder = PlaceholderButton(MaterialCompatibility.STAINED_GLASS_PANE, mutableListOf(), "", 7)
 
             for (index in 0 until staticSize!!) {
                 if (buttons[index] == null) {

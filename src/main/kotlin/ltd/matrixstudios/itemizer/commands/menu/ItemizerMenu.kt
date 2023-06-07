@@ -1,6 +1,5 @@
 package ltd.matrixstudios.itemizer.commands.menu
 
-import ltd.matrixstudios.itemizer.Itemizer
 import ltd.matrixstudios.itemizer.commands.menu.sub.LoreEditorMenu
 import ltd.matrixstudios.itemizer.menu.Button
 import ltd.matrixstudios.itemizer.menu.Menu
@@ -29,7 +28,7 @@ class ItemizerMenu(player: Player, val itemStack: ItemStack) : Menu(player) {
         buttons[22] = ItemStackButton(itemStack)
 
         for (slot in borderSlots) {
-            buttons[slot] = PlaceholderButton(MaterialCompatibility.stained_glass_pane, mutableListOf(
+            buttons[slot] = PlaceholderButton(MaterialCompatibility.STAINED_GLASS_PANE, mutableListOf(
                 " ",
                 Chat.format("&7Modify your ${if (itemStack.hasItemMeta()) Chat.format(itemStack.itemMeta!!.displayName) else Chat.format("&f" + itemStack.type.name)}"),
                 Chat.format("&7to your liking using this menu."),
