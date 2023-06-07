@@ -1,3 +1,0 @@
-{name: Itemizer, version: 1.0.0/stable, main: ltd.matrixstudios.itemizer.Itemizer,
-  description: The new easiest way to create Minecraft items!, api-version: '1.19',
-  author: Matrix Studios}
