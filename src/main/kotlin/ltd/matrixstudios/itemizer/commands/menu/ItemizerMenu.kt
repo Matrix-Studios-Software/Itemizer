@@ -1,5 +1,6 @@
 package ltd.matrixstudios.itemizer.commands.menu
 
+import ltd.matrixstudios.itemizer.commands.menu.sub.EnchantMenu
 import ltd.matrixstudios.itemizer.commands.menu.sub.LoreEditorMenu
 import ltd.matrixstudios.itemizer.menu.Button
 import ltd.matrixstudios.itemizer.menu.Menu
@@ -126,6 +127,16 @@ class ItemizerMenu(player: Player, val itemStack: ItemStack) : Menu(player) {
 
                     ItemizerMenu(player, itemStack).openMenu()
                 }.start(player)
+        }
+
+        buttons[33] = SimpleActionButton(Material.BOOK, mutableListOf(
+            " ",
+            Chat.format("&7Click here to select new &aEnchants"),
+            Chat.format("&7for the item. This will open a &asub menu"),
+            " ",
+            Chat.format("&a&lLeft-Click &ato open the menu")
+        ), Chat.format("&aEnchants"), 0).setBody { player, i, clickType ->
+            EnchantMenu(player, itemStack).openMenu()
         }
 
         return buttons
