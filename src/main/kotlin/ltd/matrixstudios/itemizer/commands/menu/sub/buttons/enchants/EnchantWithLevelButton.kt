@@ -43,7 +43,7 @@ class EnchantWithLevelButton(val itemstack: ItemStack, val enchantment: Enchantm
     }
 
     override fun onClick(player: Player, slot: Int, type: ClickType) {
-        itemstack.addEnchantment(enchantment, level)
+        itemstack.addUnsafeEnchantment(enchantment, level)
         player.sendMessage(Chat.format("&aAdded ${enchantment.name} with level " + level))
         player.updateInventory()
     }
