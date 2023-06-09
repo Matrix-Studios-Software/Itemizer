@@ -11,7 +11,14 @@ object Chat {
         val matcher: Matcher = HEX_PATTERN.matcher(message)
         val buffer = StringBuffer()
         while (matcher.find()) {
-            matcher.appendReplacement(buffer, ChatColor.of("#" + matcher.group(1)).toString())
+            try {
+                matcher.appendReplacement(
+                    buffer,
+                    ChatColor.of("#" + matcher.group(1)).toString()
+                )
+            } catch (e: NoSuchMethodError) {
+                return message
+            }
         }
         return ChatColor.translateAlternateColorCodes('&', matcher.appendTail(buffer).toString())
     }

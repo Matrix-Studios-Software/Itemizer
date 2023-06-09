@@ -143,7 +143,7 @@ class ItemizerMenu(player: Player, val itemStack: ItemStack) : Menu(player) {
     }
 
     override fun getTitle(player: Player): String {
-        return Chat.format(if (!itemStack.hasItemMeta()) "&7Editing: &f${itemStack.type.name}" else "&7Editing: &r${itemStack.itemMeta!!.displayName}")
+        return Chat.format("&7Editing Item")
 
     }
 }
