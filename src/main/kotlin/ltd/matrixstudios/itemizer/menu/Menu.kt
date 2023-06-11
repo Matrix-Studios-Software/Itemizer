@@ -1,6 +1,7 @@
 package ltd.matrixstudios.itemizer.menu
 
 import ltd.matrixstudios.itemizer.menu.buttons.PlaceholderButton
+import ltd.matrixstudios.itemizer.util.Chat
 import ltd.matrixstudios.itemizer.util.MaterialCompatibility
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -54,7 +55,7 @@ abstract class Menu(
         MenuController.addToMenuMap(player, this)
 
         if (placeholder) {
-            val placeholder = PlaceholderButton(MaterialCompatibility.STAINED_GLASS_PANE, mutableListOf(), "", 7)
+            val placeholder = PlaceholderButton(MaterialCompatibility.STAINED_GLASS_PANE, mutableListOf(), Chat.format("&f"), 7)
 
             for (index in 0 until staticSize!!) {
                 if (buttons[index] == null) {
