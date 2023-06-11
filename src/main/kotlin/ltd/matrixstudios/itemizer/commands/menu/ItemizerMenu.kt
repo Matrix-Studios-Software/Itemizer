@@ -14,6 +14,7 @@ import ltd.matrixstudios.itemizer.util.MaterialCompatibility
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import java.util.*
@@ -34,7 +35,7 @@ class ItemizerMenu(player: Player, val itemStack: ItemStack) : Menu(player) {
         for (slot in borderSlots) {
             buttons[slot] = PlaceholderButton(MaterialCompatibility.STAINED_GLASS_PANE, mutableListOf(
                 " ",
-                Chat.format("&7Modify your ${if (itemStack.hasItemMeta()) Chat.format(itemStack.itemMeta!!.displayName) else Chat.format("&f" + itemStack.type.name)}"),
+                Chat.format("&7Modify your ${if (itemStack.hasItemMeta() && itemStack.itemMeta!!.hasDisplayName()) Chat.format(itemStack.itemMeta!!.displayName) else Chat.format("&f" + itemStack.type.name)}"),
                 Chat.format("&7to your liking using this menu."),
                 " ",
                 Chat.format("&aEnchanted&7: &r" + if (itemStack.enchantments.isNotEmpty()) "&a✓ Is Enchanted" else "&c✗ Not Enchanted"),
@@ -42,7 +43,7 @@ class ItemizerMenu(player: Player, val itemStack: ItemStack) : Menu(player) {
                 Chat.format("&aAmount&7: &f" + itemStack.amount),
                 Chat.format("&aDurability&7: &f" + itemStack.durability),
                 " "
-            ), if (itemStack.hasItemMeta()) Chat.format(itemStack.itemMeta!!.displayName) else Chat.format("&f" + itemStack.type.name), 1)
+            ), if (itemStack.hasItemMeta() && itemStack.itemMeta!!.hasDisplayName()) Chat.format(itemStack.itemMeta!!.displayName) else Chat.format("&f" + itemStack.type.name), 1)
         }
 
         buttons[15] = SimpleActionButton(Material.PAPER, mutableListOf(
@@ -147,9 +148,65 @@ class ItemizerMenu(player: Player, val itemStack: ItemStack) : Menu(player) {
             EnchantMenu(player, itemStack).openMenu()
         }
 
+        buttons[34] = SimpleActionButton(Material.LADDER, mutableListOf(
+            " ",
+            Chat.format("&7Click here to hide this item's"),
+            Chat.format("&aattributes &7on the lore"),
+            " ",
+            Chat.format("&a&lLeft-Click &ato switch")
+        ), Chat.format("&aAttributes"), 0).setBody { player, i, clickType ->
+            val hasFlag = itemStack.itemMeta!!.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+
+            if (hasFlag) {
+                val meta = itemStack.itemMeta!!
+
+                meta.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+
+                itemStack.itemMeta = meta
+                player.updateInventory()
+                player.sendMessage(Chat.format("&cYou removed the item flag &fHIDE_ATTRIBUTES"))
+            } else {
+                val meta = itemStack.itemMeta!!
+
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+
+                itemStack.itemMeta = meta
+                player.updateInventory()
+                player.sendMessage(Chat.format("&aYou added the item flag &fHIDE_ATTRIBUTES"))
+            }
+        }
+
+        buttons[11] = SimpleActionButton(Material.NETHER_STAR, mutableListOf(
+            " ",
+            Chat.format("&7Click here to hide this item's"),
+            Chat.format("&aenchants &7on the lore"),
+            " ",
+            Chat.format("&a&lLeft-Click &ato switch")
+        ), Chat.format("&aHide Enchants"), 0).setBody { player, i, clickType ->
+            val hasFlag = itemStack.itemMeta!!.hasItemFlag(ItemFlag.HIDE_ENCHANTS)
+
+            if (hasFlag) {
+                val meta = itemStack.itemMeta!!
+
+                meta.removeItemFlags(ItemFlag.HIDE_ENCHANTS)
+
+                itemStack.itemMeta = meta
+                player.updateInventory()
+                player.sendMessage(Chat.format("&cYou removed the item flag &fHIDE_ENCHANTS"))
+            } else {
+                val meta = itemStack.itemMeta!!
+
+                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+
+                itemStack.itemMeta = meta
+                player.updateInventory()
+                player.sendMessage(Chat.format("&aYou added the item flag &fHIDE_ENCHANTS"))
+            }
+        }
+
         if (itemStack.itemMeta!! is LeatherArmorMeta)
         {
-            buttons[34] = SimpleActionButton(Material.LEATHER_CHESTPLATE, mutableListOf(
+            buttons[10] = SimpleActionButton(Material.LEATHER_CHESTPLATE, mutableListOf(
                 " ",
                 Chat.format("&7Click here to set the &cC&6o&el&ao&9r"),
                 Chat.format("&7of this armor piece."),
