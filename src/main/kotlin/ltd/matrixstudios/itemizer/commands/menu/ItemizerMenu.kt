@@ -1,6 +1,7 @@
 package ltd.matrixstudios.itemizer.commands.menu
 
 import ltd.matrixstudios.itemizer.commands.menu.sub.EnchantMenu
+import ltd.matrixstudios.itemizer.commands.menu.sub.LeatherSelectColorMenu
 import ltd.matrixstudios.itemizer.commands.menu.sub.LoreEditorMenu
 import ltd.matrixstudios.itemizer.menu.Button
 import ltd.matrixstudios.itemizer.menu.Menu
@@ -11,8 +12,10 @@ import ltd.matrixstudios.itemizer.util.Chat
 import ltd.matrixstudios.itemizer.util.InputPrompt
 import ltd.matrixstudios.itemizer.util.MaterialCompatibility
 import org.bukkit.Material
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.LeatherArmorMeta
 import java.util.*
 
 class ItemizerMenu(player: Player, val itemStack: ItemStack) : Menu(player) {
@@ -34,6 +37,11 @@ class ItemizerMenu(player: Player, val itemStack: ItemStack) : Menu(player) {
                 Chat.format("&7Modify your ${if (itemStack.hasItemMeta()) Chat.format(itemStack.itemMeta!!.displayName) else Chat.format("&f" + itemStack.type.name)}"),
                 Chat.format("&7to your liking using this menu."),
                 " ",
+                Chat.format("&aEnchanted&7: &r" + if (itemStack.enchantments.isNotEmpty()) "&a✓ Is Enchanted" else "&c✗ Not Enchanted"),
+                Chat.format("&aEnchants&7: &e" + (Enchantment.values().count { it.canEnchantItem(itemStack) && itemStack.containsEnchantment(it) }.toString() + "&7/&a" + (Enchantment.values().count { it.canEnchantItem(itemStack)}))),
+                Chat.format("&aAmount&7: &f" + itemStack.amount),
+                Chat.format("&aDurability&7: &f" + itemStack.durability),
+                " "
             ), if (itemStack.hasItemMeta()) Chat.format(itemStack.itemMeta!!.displayName) else Chat.format("&f" + itemStack.type.name), 1)
         }
 
@@ -137,6 +145,20 @@ class ItemizerMenu(player: Player, val itemStack: ItemStack) : Menu(player) {
             Chat.format("&a&lLeft-Click &ato open the menu")
         ), Chat.format("&aEnchants"), 0).setBody { player, i, clickType ->
             EnchantMenu(player, itemStack).openMenu()
+        }
+
+        if (itemStack.itemMeta!! is LeatherArmorMeta)
+        {
+            buttons[34] = SimpleActionButton(Material.LEATHER_CHESTPLATE, mutableListOf(
+                " ",
+                Chat.format("&7Click here to set the &cC&6o&el&ao&9r"),
+                Chat.format("&7of this armor piece."),
+                " ",
+                Chat.format("&a&lLeft-Click &ato open the menu")
+            ), Chat.format("&aSelect Color"), 0).setBody { player, i, clickType ->
+                LeatherSelectColorMenu(player, itemStack).openMenu()
+            }
+
         }
 
         return buttons
