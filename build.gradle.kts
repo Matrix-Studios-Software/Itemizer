@@ -18,10 +18,8 @@ repositories {
 }
 
 dependencies {
-    implementation("me.lucko:helper:5.6.13")
     compileOnly("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
-    kapt("me.lucko:helper:5.6.13")
 }
 
 
